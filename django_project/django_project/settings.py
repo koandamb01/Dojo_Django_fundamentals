@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'apps.time_display',
     'apps.django_app',
     'django.contrib.admin',
     'django.contrib.auth',
