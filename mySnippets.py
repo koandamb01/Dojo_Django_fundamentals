@@ -8,7 +8,9 @@
   > python manage.py makemigrations
   > python manage.py migrate
 
-
+##### time and date ############
+from time import gmtime, strftime
+today = strftime("%Y-%m-%d %H:%M %p", gmtime())
 
 ################# urls.py ##############
 from django.conf.urls import url
@@ -23,3 +25,8 @@ from django.shortcuts import render, HttpResponse, redirect
   def index(request):
     response = "Hello, I am your first request!"
     return HttpResponse(response)
+
+{% load static %}
+# The line above tells Django to be ready to listen for static files -->
+<link rel="stylesheet" href="{% static 'ourApp/css/main.css' %}">
+# Put the static files in the static folder inside your app.  
