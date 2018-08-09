@@ -14,9 +14,9 @@ today = strftime("%Y-%m-%d %H:%M %p", gmtime())
 
 ################# urls.py ##############
 from django.conf.urls import url
-from . import views           # This line is new!
+from . import views
 urlpatterns = [
-    url(r'^$', views.index)   # This line has changed! Notice that urlpatterns is a list, the comma is in
+    url(r'^$', views.index)
 ]    
 
 ############### views.py ###############
@@ -30,3 +30,30 @@ from django.shortcuts import render, HttpResponse, redirect
 # The line above tells Django to be ready to listen for static files -->
 <link rel="stylesheet" href="{% static 'ourApp/css/main.css' %}">
 # Put the static files in the static folder inside your app.  
+
+
+############ EXAMPLE OF URLS REDIRECTION ################
+urlpatterns = [
+    url(r'^$', views.index),
+    url(r'^new$', views.new),
+    url(r'^create$', views.create),
+    url(r'^(?P<number>\d+)$', views.show), # for number
+    url(r'^(?P<number>\d+)/edit$', views.edit), # for number/name
+    url(r'^(?P<number>\d+)/delete$', views.destroy)
+]
+
+# In case the BIG URL need to redirect different route in to apps
+# users app
+# /register - display 'placeholder for users to create a new user record'
+# /login - display 'placeholder for users to login' 
+# /users/new - have the same method that handles /register also handle the url request of /users/new
+# /users - display 'placeholder to later display all the list of users'
+from apps.users import views as user_views
+urlpatterns = [
+    url(r'^blogs/', include('apps.blogs.urls')),
+    url(r'^surveys/', include('apps.surveys.urls')),
+    url(r'^users/', include('apps.users.urls')),
+    url(r'^register/', user_views.register),
+    url(r'^login/', user_views.login),
+    url(r'^admin/', admin.site.urls)
+]
