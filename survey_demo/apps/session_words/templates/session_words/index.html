@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Session words</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form action="add" method="POST" class="form-group">
+                    {% csrf_token %}
+                    <label>Add a new word</label>
+                    <br>
+                    <input type="text" name="word" class="form-control">
+                    <p>choose a color</p>
+                    <input type="radio" name="color" value="text-danger"> Red
+                    <br>
+                    <input type="radio" name="color" value="text-success"> Green
+                    <br>
+                    <input type="radio" name="color" value="text-primary" checked> Blue
+                    <br>
+                    <br>
+                    <input type="checkbox" name="big">show in BIG fonts
+                    <br>
+                    <button type="submit" class="btn btn-primary">Add to Session</button>
+                    
+                </form>
+            </div>
+
+            <div class="col-md-6">
+                <a href="/session_words/clear" class="btn btn-danger">Clear Session</a>
+
+                {% for data in request.session.words %}
+                    {% if data.big == 'on' %}
+                        <p class="big {{ data.color }}">{{ data.word }}<span class="text-body">{{ data.time }}</span></p>
+                    {% else %}
+                    <p class="{{ data.color }}">{{ data.word }}<span class="text-body">{{ data.time }}</span></p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
