@@ -7,3 +7,19 @@
 # Need to be in same directory as manage.py file
   > python manage.py makemigrations
   > python manage.py migrate
+
+
+
+################# urls.py ##############
+fromcopy django.conf.urls import url
+from . import views           # This line is new!
+urlpatterns = [
+    url(r'^$', views.index)   # This line has changed! Notice that urlpatterns is a list, the comma is in
+]    
+
+############### views.py ###############
+from django.shortcuts import render, HttpResponse, redirect
+  # the index function is called when root is visited
+  def index(request):
+    response = "Hello, I am your first request!"
+    return HttpResponse(response)
