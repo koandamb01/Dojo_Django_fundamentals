@@ -27,10 +27,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# FIle uploads media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Application definition
 
 INSTALLED_APPS = [
+    'apps.user_login',
     'apps.users',
     'apps.surveys',
     'apps.blogs',
