@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <title>Login/Registration</title>
+    <style>
+        .container{
+            padding-top: 25px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Users</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="text text-danger">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Create At</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+    
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.created_at }}</td>
+                    <td>
+                        <a href="{{ user.id }}" class="btn btn-primary">Show</a>
+                        <a href="{{ user.id }}/edit" class="btn btn-warning">Edit</a>
+                        <a href="{{ user.id }}/destroy" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+      <a href="new" class="btn btn-primary">Add a new user</a>
+</div>
+</body>
+</html>
