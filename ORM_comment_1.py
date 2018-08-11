@@ -14,3 +14,10 @@ a = Author.objects.get(id=2)
 >>> a.books.add(b)
 
 
+# Fetch all record and order location by asc 
+Team.objects.all().order_by("team_name")
+
+# Fetch all record and order location by desc 
+Team.objects.all().order_by("-team_name")
+
+
