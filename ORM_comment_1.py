@@ -7,3 +7,10 @@ Blog.objects.filter(id=2).values('name')
 dojo = Dojo.objects.last() # get the last element of my Dojo table because I want my new record to relate to that id
 ninja = Ninja.objects.create(first_name="MO", last_name="Dexxk", dojo=dojo)
 
+######## To create a ManyToMany relation between a book and author
+a = Author.objects.get(id=2)
+>>> b = Book.objects.first()
+>>> a.add(b)
+>>> a.books.add(b)
+
+
