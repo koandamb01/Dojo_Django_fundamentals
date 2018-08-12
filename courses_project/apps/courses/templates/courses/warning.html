@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Courses</title>
+    <style>
+        .container{
+            padding-top: 30px;
+        }
+
+        span{
+            margin-left: 30px;
+        }
+
+        .tags{
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        a{
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h5>Are you sure you want to delete the following course?</h5>
+        <ul class="list-group">
+            <li class="list-group-item">Name: <span>{{ name }}</span></li>
+            {% if description == "" %}
+                <li class="list-group-item">Description: <span>Description about this course...</span></li>
+            {% else %}
+            <li class="list-group-item">Description: <span>{{ description }}</span></li>
+            {% endif %}
+        </ul>
+        <div class="tags">
+            <a href="/" class="btn btn-secondary">No</a>
+            <a href="/remove/{{ id }}" class="btn btn-danger">Yes! I want to delete this course</a>
+        </div>
+    </div>
+</body>
+</html>
