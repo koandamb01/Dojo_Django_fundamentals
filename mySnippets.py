@@ -5,8 +5,8 @@
 # TO add SESSION to your DJango project:
 # In our terminal, head to the directory where manage.py resides and run the following commands:
 # Need to be in same directory as manage.py file
-  > python manage.py makemigrations
-  > python manage.py migrate
+python manage.py makemigrations
+python manage.py migrate
 
 ##### time and date ############
 from time import gmtime, strftime
@@ -57,3 +57,15 @@ urlpatterns = [
     url(r'^login/', user_views.login),
     url(r'^admin/', admin.site.urls)
 ]
+
+
+
+############### BCRYPT PASSWORD HASH FOR DJANGO ##################
+import bcrypt
+hash1 = bcrypt.hashpw('test'.encode(), bcrypt.gensalt())
+def validate_login(request):
+    user = User.objects.get(email=request.POST['email'])
+    if bcrypt.checkpw(request.POST['password'].encode(), user.pw_hash.encode()):
+        print("password match")
+    else:
+        print("failed password") 
