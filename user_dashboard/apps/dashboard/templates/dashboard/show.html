@@ -62,6 +62,7 @@
         </div>
     </nav>
     <!-- {{ created_at|date:"M D, Y" }} -->
+    {% load humanize %} 
     <div class="container">
         {% if messages %}
             {% for message in messages %}
@@ -108,15 +109,19 @@
         {% for msg in messages_with_comments %}
             <br>
             <div class="message-box">
-                    <span class="col-md-6">Jerome Willis</span>
-                    <span class="col-md-6 right">7 hours ago</span>
+                <div class="row">
+                    <span class="col-md-6"><a href="/show/{{ msg.sender_id }}">{{ msg.sender_first_name }} {{ msg.sender_last_name }}</a>  wrote</span>
+                    <span class="col-md-6 right">{{ msg.created_at|naturaltime }}</span>
+                </div>
                 <p class="received-msg">{{ msg.message }}</p>
             </div>
             <!-- Above message Comments Here -->
             {% for comment in msg.comments %}
                 <div class="comment-box">
-                    <span class="col-md-6"><a href="/show/{{ comment.commenter_id }}">{{ comment.commenter_first_name }} {{ comment.commenter_last_name }}</a></span>
-                    <span class="col-md-6 right">7 hours ago</span>
+                    <div class="row">
+                        <span class="col-md-6"><a href="/show/{{ comment.commenter_id }}">{{ comment.commenter_first_name }} {{ comment.commenter_last_name }}</a>  wrote</span>
+                        <span class="col-md-6 right">{{ comment.created_at|naturaltime }}</span>
+                    </div>
                     <p class="received-msg">{{ comment.comment }}</p>
                 </div>
             {% endfor %}

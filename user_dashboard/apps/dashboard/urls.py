@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^new$', views.new_user_page), # render the new user form page
     url(r'^edit_profile/(?P<id>\d+)$', views.edit_profile_page), # render the edit profile page form
     url(r'^show/(?P<id>\d+)$', views.show), # show the user inforamtion and messages
+    url(r'^(?P<id>\d+)/destroy$', views.destroy), # show the user inforamtion and messages
 
     # Registration and Login urls
     url(r'^register_me$', views.register_me), # create a new account for a user

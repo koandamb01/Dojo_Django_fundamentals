@@ -26,8 +26,10 @@ def dashboard(request):
     # check if user id exist in session
     if 'user_id' not in request.session:
         return redirect('/')
-    
-    mydata = User.objects.get(id = request.session['user_id']) # get the logged in user data
+    try:
+        mydata = User.objects.get(id = request.session['user_id']) # get the logged in user data
+    except:
+        return redirect('/')
     users = User.objects.all() # get all users data
 
     if mydata.user_level == 9:
@@ -49,7 +51,6 @@ def edit_profile_page(request, id):
         messages.error(request, "An error accurred during your request!")
         return redirect('/dashboard')
     return render(request, 'dashboard/profile_page.html', {'user': user})
-
 
 
 # update the user first, last, email
@@ -130,8 +131,11 @@ def show(request, id):
         m = Message.objects.get(id = msg.id) # get this message id
         comments = m.message_comments.all() # use the message id to get all its comments
         
-        new_comments = []
+        # get the user that send the message name
+        u = User.objects.get(sent_messages = msg)
+
         # fetch through the comments to get the commenter information
+        new_comments = []
         for comment in comments:
             u = User.objects.get(post_comments = comment) # get the user who post this comment
             # make a new comment with the comments first and last name
@@ -150,6 +154,8 @@ def show(request, id):
                 'id': msg.id,
                 'message': msg.message,
                 'sender_id': msg.sender_id,
+                'sender_first_name': u.first_name,
+                'sender_last_name': u.last_name,
                 'receiver_id': msg.receiver_id,
                 'created_at': msg.created_at,
                 'updated_at': msg.updated_at,
@@ -157,6 +163,22 @@ def show(request, id):
             }
         )
     return render(request, 'dashboard/show.html', {'user': user, 'messages_with_comments': messages_with_comments})
+
+
+
+# remove a user
+def destroy(request, id):
+    try:
+        user = User.objects.get(id = id)
+    except:
+        return redirect('/dashboard')
+    user.delete()
+
+    messages.success(request, "A user has been successfully remove from the system")
+    return redirect('/dashboard')
+
+
+
 
 
 ############## REGISTRATION #################
