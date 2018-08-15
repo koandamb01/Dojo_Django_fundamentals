@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Login/Registration</title>
+    <style>
+        .container{
+            padding-top: 25px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Users</h1>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <p class="text text-danger">{{ message }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-9" id="placeholder"></div>
+
+        <div class="col-md-3">
+            <h2>Add a new user</h2>
+             <!-- deplay errors -->
+             {% if messages %}
+             <h2>Validation Errors</h2>
+                 {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                        <span class="text text-danger">{{ message }}</span>
+                    {% endif %}
+                 {% endfor %}
+            {% endif %}
+
+            <form class="form-row form-group" action="/create" method="POST" id="create_user">
+                {% csrf_token %}
+                <input type="text" class="form-control" name="first_name" value="{{ request.session.first_name }}" placeholder="First Name">
+                <br>
+                <br>
+                <input type="text" class="form-control" name="last_name" value="{{ request.session.last_name }}" placeholder="Last Name">
+                <br>
+                <br>
+                <input type="email" class="form-control" name="email" value="{{ request.session.email }}" placeholder="email">
+                <br>
+                <br>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
+      <a href="new" class="btn btn-primary">Add a new user</a>
+</div>
+
+<script>
+    $('#create_user').submit(function(e){
+        e.preventDefault()
+
+        $.ajax({
+            url: $(this).attr('action'), // Where should this go
+            method: 'POST', // which Http method
+            data: $(this).serialize(), // Any data to send along
+            success: function(serverResponse){ // What code should run when the server return?
+                $('#placeholder').html(serverResponse);
+            }
+        })
+    });
+
+</script>
+</body>
+</html>

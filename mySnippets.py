@@ -26,6 +26,12 @@ from django.shortcuts import render, HttpResponse, redirect
     response = "Hello, I am your first request!"
     return HttpResponse(response)
 
+
+############## models.py ################
+from __future__ import unicode_literals
+from django.db import models
+
+
 {% load static %}
 # The line above tells Django to be ready to listen for static files -->
 <link rel="stylesheet" href="{% static 'ourApp/css/main.css' %}">
